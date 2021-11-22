@@ -3,6 +3,8 @@ package com.epam.rd.autocode;
 import com.epam.rd.autocode.domain.Employee;
 import com.epam.rd.autocode.domain.FullName;
 import com.epam.rd.autocode.domain.Position;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRowMapper implements RowMapper<Employee> {
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final byte COLUMN_ID = 1;
     private static final byte COLUMN_FIRST_NAME = 2;
     private static final byte COLUMN_LAST_NAME = 3;
@@ -35,7 +38,7 @@ public class EmployeeRowMapper implements RowMapper<Employee> {
             BigDecimal salary = resultSet.getBigDecimal(COLUMN_SALARY);
             employeeList.add(new Employee(id, fullName, position, hired, salary));
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
         return employeeList.get(0);
     }
